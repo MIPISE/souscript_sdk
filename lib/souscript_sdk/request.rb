@@ -14,8 +14,16 @@ module SouscriptSDK
       end
     end
 
+    # REQUETES TYPE 1000 ENVIRONNEMENT
+
     define_request(:scpis, 1001) { |response| response.dig(:api, :scpi) }
 
     define_request(:scpi_valuation, 1002, %i[idscpi]) { |response| response.dig(:api, :valeur) }
+
+    define_request(:scpi_bare_ownerships, 1003, %i[idscpi]) { |response| response.dig(:api, :valeur) }
+
+    define_request(:document_categories, 1004) { |response| response.dig(:api, :catdoc) }
+
+    define_request(:document_types, 1005, %i[idcat]) { |response| response.dig(:api, :typedoc) }
   end
 end
