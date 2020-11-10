@@ -6,7 +6,7 @@ module SouscriptSDK
     def query(method:, args:)
       uri = URI.parse(make_uri(method, args))
       res = Net::HTTP.get(uri)
-      Hash.from_xml(res)
+      underscore_hash_keys(Hash.from_xml(res))
     end
 
     private

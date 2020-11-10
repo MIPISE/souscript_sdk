@@ -14,8 +14,8 @@ module SouscriptSDK
       end
     end
 
-    define_request(:scpis, 1001) { |response| response.dig("API", "SCPI") }
+    define_request(:scpis, 1001) { |response| response.dig(:api, :scpi) }
 
-    define_request(:scpi_valuation, 1002, %i[idscpi]) { |response| response.dig("API", "VALEUR") }
+    define_request(:scpi_valuation, 1002, %i[idscpi]) { |response| response.dig(:api, :valeur) }
   end
 end

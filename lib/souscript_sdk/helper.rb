@@ -10,6 +10,17 @@ module SouscriptSDK
       )
     end
 
+    def underscore_hash_keys(value)
+      case value
+      when Array then value.map { |v| underscore_hash_keys(v) }
+      when Hash
+        Hash[value.map { |k, v|
+          [k.to_s.underscore.to_sym, underscore_hash_keys(v)]
+        }]
+      else value
+      end
+    end
+
     private
 
     def stringify_and_upcase_keys(hash)
