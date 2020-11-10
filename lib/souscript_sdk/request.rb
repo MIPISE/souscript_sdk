@@ -2,10 +2,15 @@ require "byebug"
 
 module SouscriptSDK
   module Request
-    def self.define_request(method, code, mandatory_args = {}, optional_args = {}, &process)
+    def self.define_request(method, code, required_keys = [], optional_keys = [], &process)
       define_method(method) do |args = {}|
-        res = query(method: code, args: args)
-        process.call(res)
+        result =
+          query(
+            method: code,
+            args: format_hash(args, required_keys, optional_keys)
+          )
+
+        process.call(result)
       end
     end
 
