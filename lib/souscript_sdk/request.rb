@@ -41,11 +41,11 @@ module SouscriptSDK
     #   - :idscpi* [Integer] ID de la SCPI
     # @return: [Valeurs]
     #   - :duree       [String] Durée en année
-    #   - :nuepro      [String] Valeur nue propriété en % 
-    #   - :usufr       [String] Valeur usufruit en % 
+    #   - :nuepro      [String] Valeur nue propriété en %
+    #   - :usufr       [String] Valeur usufruit en %
     define_request(:scpi_bare_ownerships, 1003, %i[idscpi]) { |response| response.dig(:api, :valeur) }
 
-    # catégorie document : liste des catégories de documents 
+    # catégorie document : liste des catégories de documents
     # ------------------------------------------------------------------------
     # @return: [catdoc]
     #   - :nom    [String] Nom du document
@@ -55,7 +55,7 @@ module SouscriptSDK
     # type document : liste des types de documents
     # ------------------------------------------------------------------------
     # @param:
-    #   - :idcat*  [integer] Identifiant de la catégorie 
+    #   - :idcat*  [integer] Identifiant de la catégorie
     # @return: [typedoc]
     #   - :nom [String] Nom du document
     #   - :id  [String] ID du document
@@ -94,7 +94,7 @@ module SouscriptSDK
       %i[idcli refext],
       %i[idapporteur nom prenom add1 add2 cp ville tel mobile mail bic iban reinvest]
     ) { |response| response.dig(:api, :res) }
-    
+
     # création/modification d’une société : résultat de la modification
     # ------------------------------------------------------------------------
     # @param:
@@ -132,7 +132,7 @@ module SouscriptSDK
       %i[idsoc refext creamod],
       %i[raison rcs addi cp ville tel mobile mail bic iban tableretro rc_contactrc_tel rc_mobile rc_mail]
     ) { |response| response.dig(:api) }
-    
+
     # création/modification d’un tiers : résultat de la modification
     # ------------------------------------------------------------------------
     # @param:
@@ -158,10 +158,10 @@ module SouscriptSDK
     define_request(
       :creation_udpate_third_party,
       2003,
-      %i[idcgp  refext creamod idsoc],
+      %i[idcgp refext creamod idsoc],
       %i[nom prenom add1 datenaissance villenaissance paysnaissance cp ville tel mobile mail bic iban]
     ) { |response| response.dig(:api, :res) }
-    
+
     # création/modification d’un tiers : résultat de la modification
     # ------------------------------------------------------------------------
     # @param:
@@ -189,7 +189,7 @@ module SouscriptSDK
       %i[idverprog refext],
       %i[periodicite mois1 typevp montantvp arevocation datelimvp actifvp]
     ) { |response| response.dig(:api, :res) }
-    
+
     # ========================================================================
     # > Requetes type 3000 associe
     # ========================================================================
@@ -207,7 +207,7 @@ module SouscriptSDK
     #   - :refext  [String] Référence externe du client
     #   - :datemaj [String] Dernière date de mise à jour manuelle
     define_request(:get_partners_list, 3001) { |response| response.dig(:api, :associe) }
-    
+
     # liste des associes : liste des associe
     # ------------------------------------------------------------------------
     # @param:
@@ -219,7 +219,7 @@ module SouscriptSDK
     #   - :civili [String] Civilité (1 Monsieur, 2 Madame, 3 M M)
     #   - :prenom [String] Prénom de l’associé personne physique ou du contact personne morale
     #   - :nomass [String] Nom de l’associé personne physique ou du contact personne morale
-    #   - :rcsoci [String] Numéro de RCS ou SIREN, SIRET de l’associé personne morale 
+    #   - :rcsoci [String] Numéro de RCS ou SIREN, SIRET de l’associé personne morale
     #   - :datena [String] Date de naissance de l’associé personne physique
     #   - :adres1 [String] Première ligne d’adresse postale
     #   - :adres2 [String] Seconde ligne d’adresse postale
@@ -255,7 +255,7 @@ module SouscriptSDK
     #   - :prinfu [String] Préférence communication par mail des autres informations usufr (0 non  1 oui)
     #   - :dispob [String] Dispense de prélèvement obligatoire (0 non  1 oui)
     define_request(:get_partner_details, 3002, %i[idcli]) { |response| response.dig(:api, :associe) }
-    
+
     # liste des parts : liste des parts
     # ------------------------------------------------------------------------
     # @param:
@@ -275,9 +275,9 @@ module SouscriptSDK
     #   - :date         [String] Date de la souscription
     #   - :datej        [String] Date de jouissance
     #   - :datef        [String] Date de fin de jouissance
-    #   - :statut       [String] 1 ACTIVE  2 MUTEE 3 ETEINTE 
+    #   - :statut       [String] 1 ACTIVE  2 MUTEE 3 ETEINTE
     define_request(:get_share_list, 3003, %i[idcli]) { |response| response.dig(:api, :souscript) }
-    
+
     # liste des mouvements financiers : liste des mouvements financiers
     # ------------------------------------------------------------------------
     # @param:
@@ -288,7 +288,7 @@ module SouscriptSDK
     #   - :sens     [String] 1 Payé par le client  2 Reçu par le client
     #   - :montant  [String] Montant en euros
     define_request(:get_financial_flows_list, 3004, %i[idcli]) { |response| response.dig(:api, :mvt) }
-    
+
     # liste des documents d'un client : liste des documents d'un client
     # ------------------------------------------------------------------------
     # @param:
@@ -304,12 +304,12 @@ module SouscriptSDK
     #   - :idsouscript  [String] Identifiant de la souscription (Si 0, il s’agit d’un document personnel)
     #   - :datemaj      [String] Dernière date de téléchargement du document
     define_request(:get_customer_documents_list, 3005, %i[idcli]) { |response| response.dig(:api, :doc) }
-    
+
     # telecharger un document : document
     # ------------------------------------------------------------------------
     # @param:
     #   - iddoc* [Integer] Identifiant du document
-    # @return: 
+    # @return:
     #   - :err         [String] Message d’erreur ou de confirmation
     #                           0: l’IDDOC est fausse (ne pointe pas sur un document existant)
     #                           1: l’IDDOC est bonne mais pointe sur un document dont la pièce n’a pas été téléchargée dans la GED.
@@ -317,7 +317,7 @@ module SouscriptSDK
     #   - :doc
     #       - :b64     [String] Buffer du document codé en base 64
     define_request(:download_document, 3006, %i[iddoc]) { |response| response.dig(:api, :doc) }
-    
+
     # liste des versements programmes d’un associe : liste des versements programmes d’un associe
     # ------------------------------------------------------------------------
     # @param:
@@ -332,11 +332,10 @@ module SouscriptSDK
     #   - :arevoc   [String] 1 programme sans date limite prévue, 0 programme avec date limite prévue
     #   - :datelim  [String] Date limite d’application
     #   - :actif    [String] 1 programme activé, 0 programme désactivé
-    #   - :type     [String] 1 montant en euros, 2 montant en nombre de parts 
+    #   - :type     [String] 1 montant en euros, 2 montant en nombre de parts
     #   - :montant  [String] Montant souscrit en euros ou en nombre de parts delon type
     define_request(:get_partner_programmed_payement_list, 3007, %i[idcli]) { |response| response.dig(:api, :verprog) }
-    
-    
+
     # ========================================================================
     # > Requetes type 4000 cgp
     # ========================================================================
@@ -344,7 +343,7 @@ module SouscriptSDK
     # liste de tous les cgp : liste de tous les cgp
     # ------------------------------------------------------------------------
     # @return: [cgp]
-    #   - :civ      [String] Civilité 
+    #   - :civ      [String] Civilité
     #   - :prenom   [String] Prénom
     #   - :nom      [String] Nom
     #   - :mail     [String] adresse email
@@ -352,13 +351,13 @@ module SouscriptSDK
     #   - :refext   [String] Référence externe du cgp
     #   - :ids      [String] Identifiant de la société de rattachement
     #   - :dgs      [String] Droits global de vue sur la société
-    #                        si oui, cette personne est habilitée à accéder à tous les clients de la société 
+    #                        si oui, cette personne est habilitée à accéder à tous les clients de la société
     #                        0 non  1 oui
     #   - :idg      [String] Identifiant du groupement de rattachement
     #   - :dgg      [String] Droits global de vue sur le groupement
     #   - :datemaj  [String] Dernière date de mise à jour manuelle de la fiche
     define_request(:get_cgp_list, 4001) { |response| response.dig(:api, :cgp) }
-    
+
     # clients cgp : liste de tous les clients du cgp
     # ------------------------------------------------------------------------
     # @param:
@@ -373,7 +372,7 @@ module SouscriptSDK
     #   - :id       [String] Identifiant du client
     #   - :codeid   [String] Identifiant à usage interne SGP
     define_request(:get_cgp_customers_list, 4002, %i[idcgp]) { |response| response.dig(:api, :client) }
-    
+
     # ========================================================================
     # > Requetes type 5000 sociétés
     # ========================================================================
@@ -384,7 +383,7 @@ module SouscriptSDK
     #   - :nom   [String] Nom du groupement
     #   - :id    [String] ID du groupement
     define_request(:get_group_list, 5001) { |response| response.dig(:api, :groupe) }
-    
+
     # CGP de groupement : liste des cgp du groupement
     # ------------------------------------------------------------------------
     # @param:
@@ -395,13 +394,13 @@ module SouscriptSDK
     #   - :nom       [String] Nom
     #   - :id        [String] Identifiant du CGP
     #   - :ids       [String] Identifiant de la société de rattachement
-    #   - :dgs       [String] Droits global de vue sur la société 
-    #                         si oui, cette personne est habilitée à accéder à tous les clients de la société 
+    #   - :dgs       [String] Droits global de vue sur la société
+    #                         si oui, cette personne est habilitée à accéder à tous les clients de la société
     #                         0 non  1 oui
     #   - :idg       [String] Identifiant du groupement de rattachement (0 si non rattaché à un groupement)
     #   - :dgg       [String] Droits global de vue sur le groupement
     define_request(:get_group_cgp_list, 5002, %i[idgroupe]) { |response| response.dig(:api, :cgp) }
-    
+
     # sociétés : liste des sociétés (ou cabinets)
     # ------------------------------------------------------------------------
     # @return: [societe]
@@ -410,7 +409,7 @@ module SouscriptSDK
     #   - :refext    [String] Référence externe de la société
     #   - :datemaj   [String] Dernière date de mise à jour manuelle de la fiche
     define_request(:get_companies_list, 5003) { |response| response.dig(:api, :societe) }
-    
+
     # CGP de société : liste des cgp de la societe (du cabinet
     # ------------------------------------------------------------------------
     # @param:
@@ -422,12 +421,11 @@ module SouscriptSDK
     #   - :id        [String] Identifiant du CGP
     #   - :refext    [String] Référence externe du cgp
     #   - :ids       [String] Identifiant de la société de rattachement
-    #   - :dgs       [String] Droits global de vue sur la société 
-    #                         si oui, cette personne est habilitée à accéder à tous les clients de la société 
+    #   - :dgs       [String] Droits global de vue sur la société
+    #                         si oui, cette personne est habilitée à accéder à tous les clients de la société
     #                         0 non  1 oui
     #   - :idg       [String] Identifiant du groupement de rattachement (0 si non rattaché à un groupement)
     #   - :dgg       [String] Droits global de vue sur le groupement
     define_request(:get_companies_cgp_list, 5004) { |response| response.dig(:api, :cgp) }
-
   end
 end
