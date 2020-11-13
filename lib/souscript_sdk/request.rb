@@ -25,7 +25,7 @@ module SouscriptSDK
     #   - :nom [String] Nom de la SCPI
     define_request(:scpis, 1001) { |response| response.dig(:api, :scpi) }
 
-    # Valorisation SCPI : liste des valeurs historiques de souscription
+    # Valorisations SCPI : liste des valeurs historiques de souscription
     # ------------------------------------------------------------------------
     # @param:
     #   - :idscpi* [Integer] ID de la SCPI
@@ -33,7 +33,7 @@ module SouscriptSDK
     #   - :date      [String] Date
     #   - :souscript [String] Valeur de souscription
     #   - :rachat    [String] Valeur de rachat
-    define_request(:scpi_valuation, 1002, %i[idscpi]) { |response| response.dig(:api, :valeur) }
+    define_request(:scpi_valuations, 1002, %i[idscpi]) { |response| response.dig(:api, :valeur) }
 
     # Table de demembrement : liste des valeurs des pourcentages de démembrement
     # ------------------------------------------------------------------------
