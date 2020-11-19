@@ -69,7 +69,6 @@ test "Type 3000 and 2000" do
   customer_document_id = customer_documents_list.first[:iddoc]
 
   #3006
-  #pb avec la requête
   download_document = SouscriptSDK.download_document(iddoc: customer_document_id)
   assert download_document.is_a?(Hash)
   assert (download_document[:b64].present? or (download_document[:err].present? and (download_document[:err] == '0' or download_document[:err] == '1')))
@@ -108,8 +107,6 @@ test "Type 5000 and 2000" do
   group_id = group_list[:id]
 
   #2002
-
-  #4002
 
   #5002
   group_cgp_list = SouscriptSDK.get_group_cgp_list(idgroupe: group_id)
