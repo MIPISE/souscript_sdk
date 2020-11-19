@@ -316,7 +316,7 @@ module SouscriptSDK
     #                           2: OK, on renvoie un document contenu dan la GED, codé en base 64, dans le champ <B64>
     #   - :doc
     #       - :b64     [String] Buffer du document codé en base 64
-    define_request(:download_document, 3006, %i[iddoc]) { |response| response.dig(:api, :doc) }
+    define_request(:download_document, 3006, %i[iddoc]) { |response| response.dig(:api) }
 
     # liste des versements programmes d’un associe : liste des versements programmes d’un associe
     # ------------------------------------------------------------------------
@@ -426,6 +426,6 @@ module SouscriptSDK
     #                         0 non  1 oui
     #   - :idg       [String] Identifiant du groupement de rattachement (0 si non rattaché à un groupement)
     #   - :dgg       [String] Droits global de vue sur le groupement
-    define_request(:get_companies_cgp_list, 5004) { |response| response.dig(:api, :cgp) }
+    define_request(:get_companies_cgp_list, 5004, %i[idsoc]) { |response| response.dig(:api, :cgp) }
   end
 end
