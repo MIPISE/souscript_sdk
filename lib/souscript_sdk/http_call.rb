@@ -1,7 +1,7 @@
 require "net/http"
 require "active_support/core_ext/hash"
 
-module SouscriptSDK
+class SouscriptSDK
   module HTTPCall
     def query(method:, args:)
       uri = URI.parse(make_uri(method, args))

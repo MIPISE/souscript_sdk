@@ -1,4 +1,4 @@
-module SouscriptSDK
+class SouscriptSDK
   module Helper
     def format_hash(hash, required_keys, optional_keys)
       stringify_and_upcase_keys(

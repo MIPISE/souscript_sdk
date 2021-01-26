@@ -1,6 +1,6 @@
 require "byebug"
 
-module SouscriptSDK
+class SouscriptSDK
   module Request
     def self.define_request(method, code, required_keys = [], optional_keys = [], &process)
       define_method(method) do |args = {}|
