@@ -276,7 +276,10 @@ class SouscriptSDK
     #   - :datej        [String] Date de jouissance
     #   - :datef        [String] Date de fin de jouissance
     #   - :statut       [String] 1 ACTIVE  2 MUTEE 3 ETEINTE
-    define_request(:get_share_list, 3003, %i[idcli]) { |response| response.dig(:api, :souscript) }
+    define_request(:get_share_list, 3003, %i[idcli]) do |response|
+      res = response.dig(:api, :souscript)
+      res.is_a?(Hash) ? [res] : res
+    end
 
     # liste des mouvements financiers : liste des mouvements financiers
     # ------------------------------------------------------------------------
