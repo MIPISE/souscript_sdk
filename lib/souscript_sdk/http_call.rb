@@ -9,7 +9,11 @@ class SouscriptSDK
         .get(uri)
         .force_encoding("ISO-8859-1").encode("UTF-8") # Fix encoding issue with accentuated letters
 
-      underscore_hash_keys(Hash.from_xml(res))
+      underscore_hash_keys(
+        Hash.from_xml(
+          res.gsub(/&(?!(?:amp|lt|gt|quot|apos);)/, "&amp;")
+        )
+      )
     end
 
     private
