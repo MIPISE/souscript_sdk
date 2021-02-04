@@ -290,7 +290,10 @@ class SouscriptSDK
     #   - :lib      [String] Libellé explicatif du mouvement
     #   - :sens     [String] 1 Payé par le client  2 Reçu par le client
     #   - :montant  [String] Montant en euros
-    define_request(:get_financial_flows_list, 3004, %i[idcli]) { |response| response.dig(:api, :mvt) }
+    define_request(:get_financial_flows_list, 3004, %i[idcli]) do |response|
+      res = response.dig(:api, :mvt)
+      res.is_a?(Hash) ? [res] : res
+    end
 
     # liste des documents d'un client : liste des documents d'un client
     # ------------------------------------------------------------------------
