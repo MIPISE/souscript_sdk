@@ -1,5 +1,3 @@
-require "byebug"
-
 class SouscriptSDK
   module Request
     def self.define_request(method, code, required_keys = [], optional_keys = [], &process)
