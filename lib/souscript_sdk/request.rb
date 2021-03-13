@@ -83,7 +83,7 @@ class SouscriptSDK
     #   - :bic          [string] BIC du compte bancaire
     #   - :iban         [string] IBAN du compte bancaire
     #   - :reinvest     [integer] 1 : réinvestissement des dividendes demandé
-    #                              0 : pas de réinvestissement des dividendes
+    #                             0 : pas de réinvestissement des dividendes
     # @return:
     #   - :res    [String] Résultat de la modification
     define_request(
