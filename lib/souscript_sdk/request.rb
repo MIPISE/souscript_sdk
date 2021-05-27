@@ -99,13 +99,15 @@ class SouscriptSDK
     #   - :iban         [string] IBAN du compte bancaire
     #   - :reinvest     [integer] 1 : réinvestissement des dividendes demandé
     #                             0 : pas de réinvestissement des dividendes
+    #   - :reinvseuil   [integer] Seuil de réinvestissement de dividende (dividendes réinvestis au-delà du seuil)
+    #   - :reinvpc      [integer] Pourcentage du dividende au-delè du seuil à réinvestir
     # @return:
     #   - :res    [String] Résultat de la modification
     define_request(
       :udpate_partner,
       2001,
       %i[idcli refext],
-      %i[idapporteur nom prenom add1 add2 cp ville tel mobile mail bic iban reinvest]
+      %i[idapporteur nom prenom add1 add2 cp ville tel mobile mail bic iban reinvest reinvseuil reinvpc]
     ) { |response| response.dig(:api, :res) }
 
     # création/modification d’une société : résultat de la modification
