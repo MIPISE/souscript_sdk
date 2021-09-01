@@ -84,19 +84,22 @@ class SouscriptSDK
     #   - :iban         [string] IBAN du compte bancaire
     #   - :reinvest     [integer] 1 : réinvestissement des dividendes demandé
     #                             0 : pas de réinvestissement des dividendes
+    #   - :reinvseuil   [integer] Seuil du réinvestissement de dividende
+    #   - :reinvpc      [integer] Pourcentage du dividende au-delà du seuil à réinvestir
     # @return:
     #   - :res    [String] Résultat de la modification
     define_request(
       :udpate_partner,
       2001,
       %i[idcli refext],
-      %i[idapporteur nom prenom add1 add2 cp ville tel mobile mail bic iban reinvest]
+      %i[idapporteur nom prenom add1 add2 cp ville tel mobile mail bic iban reinvest reinvseuil reinvpc]
     ) { |response| response.dig(:api, :res) }
 
     # création/modification d’une société : résultat de la modification
     # ------------------------------------------------------------------------
     # @param:
     #   - :idsoc*       [integer] Identifiant de base de la société
+    #   - :idgr*        [integer] Identifiant base du groupement auquel appartient la sociétés (0 si aucune appartenance)
     #   - :refext*      [integer] Référence externe de la société
     #   - :creamod*     [integer] Mode de la requête (1 pour création, 2 pour modification)
     #   - :raison       [string] Raison sociale
@@ -125,10 +128,10 @@ class SouscriptSDK
     #   - :refext [String] Paramètre refext passé en paramètre
     #   - :res    [String] Résultat de la modification
     define_request(
-      :creation_udpate_company,
+      :creation_update_company,
       2002,
-      %i[idsoc refext creamod],
-      %i[raison rcs addi cp ville tel mobile mail bic iban tableretro rc_contactrc_tel rc_mobile rc_mail]
+      %i[idsoc idgr refext creamod],
+      %i[raison rcs add1 cp ville tel mobile mail bic iban tableretro rc_contact rc_tel rc_mobile rc_mail]
     ) { |response| response.dig(:api) }
 
     # création/modification d’un tiers : résultat de la modification
@@ -187,6 +190,29 @@ class SouscriptSDK
       %i[idverprog refext],
       %i[periodicite mois1 typevp montantvp arevocation datelimvp actifvp]
     ) { |response| response.dig(:api, :res) }
+
+    # création/modification d’un tiers : résultat de la modification
+    # ------------------------------------------------------------------------
+    # @param:
+    #   - :idsoc*       [Integer] Identifiant base de la société
+    #   - :idcgp*       [String] Identifiant base du Tiers
+    #   - :creamod*     [Integer] Mode de la requête (1 pour création, 2 pour modification)
+    #   - :guiddoc      [String] Identifiant GUID du document en cas de modification (absent ou valeur vide en cas de création)
+    #   - :idcat        [Integer] Identifiant de la catégorie de document
+    #   - :typedoc      [Integer] Identifiant du type de document
+    #   - :nomdoc       [String] Libellé du document (pas le nom du fichier)
+    #   - :nomfichier   [String] Nom du fichier.extension (sans chemin!)
+    #   - :datevaldoc   [String] (AAAAMMJJ) Date limite de validité du document si connue ou pertinente
+    #   - :fichierb64   [String] Le document codé en BASE64
+    # @return:
+    #   - :res      [String] Résultat de la modification
+    #   - :guid     [String] Champs GUID du document créé ou modifié
+    define_request(
+      :udpate_programmed_payement,
+      2005,
+      %i[idsoc idcgp creamod],
+      %i[guiddoc idcat typedoc nomdoc nomfichier datevaldoc fichierb64]
+    ) { |response| response.dig(:api) }
 
     # ========================================================================
     # > Requetes type 3000 associe
@@ -282,7 +308,7 @@ class SouscriptSDK
     # liste des mouvements financiers : liste des mouvements financiers
     # ------------------------------------------------------------------------
     # @param:
-    #   - idcli* [Integer] Identifiant du client
+    #   - :idcli* [Integer] Identifiant du client
     # @return: [Mvt]
     #   - :date     [String] Date du paiement
     #   - :lib      [String] Libellé explicatif du mouvement
@@ -296,7 +322,8 @@ class SouscriptSDK
     # liste des documents d'un client : liste des documents d'un client
     # ------------------------------------------------------------------------
     # @param:
-    #   - idcli* [Integer] Identifiant du client
+    #   - :idcli*       [Integer] Identifiant du client
+    #   - :typedoc*     [String] Type de document demandé
     # @return: [Doc]
     #   - :date         [String] Date De téléchargement ou d’envoi
     #   - :lib          [String] Libellé descriptif du document
@@ -307,7 +334,7 @@ class SouscriptSDK
     #   - :iddoc        [String] Identifiant du document
     #   - :idsouscript  [String] Identifiant de la souscription (Si 0, il s’agit d’un document personnel)
     #   - :datemaj      [String] Dernière date de téléchargement du document
-    define_request(:get_customer_documents_list, 3005, %i[idcli]) { |response| response.dig(:api, :doc) }
+    define_request(:get_customer_documents_list, 3005, %i[idcli typedoc]) { |response| response.dig(:api, :doc) }
 
     # telecharger un document : document
     # ------------------------------------------------------------------------
@@ -392,24 +419,17 @@ class SouscriptSDK
     # ------------------------------------------------------------------------
     # @param:
     #   - :idgroupe* [Integer] Identifiant du groupement
-    # @return: [cgp]
-    #   - :civ       [String] Civilité (1 Monsieur    2 Madame)
-    #   - :prenom    [String] Prenom
-    #   - :nom       [String] Nom
-    #   - :id        [String] Identifiant du CGP
-    #   - :ids       [String] Identifiant de la société de rattachement
-    #   - :dgs       [String] Droits global de vue sur la société
-    #                         si oui, cette personne est habilitée à accéder à tous les clients de la société
-    #                         0 non  1 oui
-    #   - :idg       [String] Identifiant du groupement de rattachement (0 si non rattaché à un groupement)
-    #   - :dgg       [String] Droits global de vue sur le groupement
-    define_request(:get_group_cgp_list, 5002, %i[idgroupe]) { |response| response.dig(:api, :cgp) }
+    # @return: [societe]
+    #   - :rs        [String] Raison sociale de la société
+    #   - :id        [String] Identifiant base de la société 
+    define_request(:get_group_companies_list, 5002, %i[idgroupe]) { |response| response.dig(:api, :societe) }
 
     # sociétés : liste des sociétés (ou cabinets)
     # ------------------------------------------------------------------------
     # @return: [societe]
     #   - :nom       [String] Raison sociale de la société
     #   - :id        [String] Identifiant base de la société
+    #   - :idgrp     [String] Identifiant base du groupement auquel appartient la société (0 si aucune appartenance)
     #   - :refext    [String] Référence externe de la société
     #   - :datemaj   [String] Dernière date de mise à jour manuelle de la fiche
     define_request(:get_companies_list, 5003) { |response| response.dig(:api, :societe) }
