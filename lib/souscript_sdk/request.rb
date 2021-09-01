@@ -90,7 +90,7 @@ class SouscriptSDK
       :udpate_partner,
       2001,
       %i[idcli refext],
-      %i[idapporteur nom prenom add1 add2 cp ville tel mobile mail bic iban reinvest]
+      %i[idapporteur nom prenom add1 add2 cp ville tel mobile mail bic iban reinvest reinvseuil reinvpc]
     ) { |response| response.dig(:api, :res) }
 
     # création/modification d’une société : résultat de la modification
@@ -127,8 +127,8 @@ class SouscriptSDK
     define_request(
       :creation_udpate_company,
       2002,
-      %i[idsoc refext creamod],
-      %i[raison rcs addi cp ville tel mobile mail bic iban tableretro rc_contactrc_tel rc_mobile rc_mail]
+      %i[idsoc idgr refext creamod],
+      %i[raison rcs add1 cp ville tel mobile mail bic iban tableretro rc_contact rc_tel rc_mobile rc_mail]
     ) { |response| response.dig(:api) }
 
     # création/modification d’un tiers : résultat de la modification
@@ -320,7 +320,7 @@ class SouscriptSDK
     #                           2: OK, on renvoie un document contenu dan la GED, codé en base 64, dans le champ <B64>
     #   - :doc
     #       - :b64     [String] Buffer du document codé en base 64
-    define_request(:download_document, 3006, %i[iddoc]) { |response| response.dig(:api) }
+    define_request(:download_document, 3006, %i[iddoc]) { |response| response.dig(:api, :doc) }
 
     # liste des versements programmes d’un associe : liste des versements programmes d’un associe
     # ------------------------------------------------------------------------
@@ -403,7 +403,7 @@ class SouscriptSDK
     #                         0 non  1 oui
     #   - :idg       [String] Identifiant du groupement de rattachement (0 si non rattaché à un groupement)
     #   - :dgg       [String] Droits global de vue sur le groupement
-    define_request(:get_group_cgp_list, 5002, %i[idgroupe]) { |response| response.dig(:api, :cgp) }
+    define_request(:get_group_cgp_list, 5002, %i[idgroupe]) { |response| response.dig(:api, :societe) }
 
     # sociétés : liste des sociétés (ou cabinets)
     # ------------------------------------------------------------------------
