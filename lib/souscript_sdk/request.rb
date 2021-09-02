@@ -89,7 +89,7 @@ class SouscriptSDK
     # @return:
     #   - :res    [String] Résultat de la modification
     define_request(
-      :udpate_partner,
+      :update_partner,
       2001,
       %i[idcli refext],
       %i[idapporteur nom prenom add1 add2 cp ville tel mobile mail bic iban reinvest reinvseuil reinvpc]
@@ -157,13 +157,13 @@ class SouscriptSDK
     # @return:
     #   - :res      [String] Résultat de la modification
     define_request(
-      :creation_udpate_third_party,
+      :creation_update_third_party,
       2003,
       %i[idcgp refext creamod idsoc],
       %i[nom prenom add1 datenaissance villenaissance paysnaissance cp ville tel mobile mail bic iban]
     ) { |response| response.dig(:api, :res) }
 
-    # création/modification d’un tiers : résultat de la modification
+    # Modification d'un versement programmé
     # ------------------------------------------------------------------------
     # @param:
     #   - :idverprog*   [Integer] Identifiant base du versement programmé (en cas de modification)
@@ -185,13 +185,13 @@ class SouscriptSDK
     # @return:
     #   - :res      [String] Résultat de la modification
     define_request(
-      :udpate_programmed_payement,
+      :update_programmed_payment,
       2004,
       %i[idverprog refext],
       %i[periodicite mois1 typevp montantvp arevocation datelimvp actifvp]
     ) { |response| response.dig(:api, :res) }
 
-    # création/modification d’un tiers : résultat de la modification
+    # Envoi d'un document partenaire
     # ------------------------------------------------------------------------
     # @param:
     #   - :idsoc*       [Integer] Identifiant base de la société
@@ -208,7 +208,7 @@ class SouscriptSDK
     #   - :res      [String] Résultat de la modification
     #   - :guid     [String] Champs GUID du document créé ou modifié
     define_request(
-      :udpate_programmed_payement,
+      :upload_partner_document,
       2005,
       %i[idsoc idcgp creamod],
       %i[guiddoc idcat typedoc nomdoc nomfichier datevaldoc fichierb64]
