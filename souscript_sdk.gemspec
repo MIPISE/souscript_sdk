@@ -10,4 +10,7 @@ Gem::Specification.new do |s|
   s.files = `git ls-files`.split("\n")
 
   s.add_dependency "activesupport", ">= 5.1.0"
+
+  s.add_development_dependency "cutest", "~> 1.2"
+  s.add_development_dependency "dotenv", "~> 2.7"
 end
