@@ -116,9 +116,10 @@ class SouscriptSDK
     #                            (séparateur de colonne « ;», séparateur de ligne «*»)
     #                            col 1 : id base interne souscript de la scpi (connu via requête 1001)
     #                            col 2 : nom de la scpi (connu via requête 1001)
-    #                            col 3 : pourcentage (. décimal)
-    #                            exemple :
-    #                            1 ;vendôme région;7.5*4 ;fair invest ;6
+    #                            col 3 : commission % (. décimal)
+    #                            col 4 : commission sur encours (0 ou 1)
+    #                            col 5 : commission sur encours % (. décimal)
+    #                            exemple : "1;vendôme région;7.5;0*4;fair invest;6;1;3.5"
     #   - :rc_contact   [string] Nom du destinataire des relevés de collecte
     #   - :rc_tel       [String] Téléphone du destinataire des relevés de collecte
     #   - :rc_mobile    [String] Mobile du destinataire des relevés de collecte
