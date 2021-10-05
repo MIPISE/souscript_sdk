@@ -182,7 +182,7 @@ class SouscriptSDK
     # @return:
     #   - :res      [String] Résultat de la modification
     define_request(
-      :udpate_programmed_payement,
+      :udpate_programmed_payment,
       2004,
       %i[idverprog refext],
       %i[periodicite mois1 typevp montantvp arevocation datelimvp actifvp]
