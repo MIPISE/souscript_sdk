@@ -12,7 +12,7 @@ class SouscriptSDK
       underscore_hash_keys(
         Hash.from_xml(
           res
-            .gsub(/<(?=[^<>]*<)/, '&lt;')
+            .gsub(/<(?=[^<>]*<)/, "&lt;")
             .gsub(/&(?!(?:amp|lt|gt|quot|apos);)/, "&amp;")
         )
       )
