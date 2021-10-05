@@ -4,7 +4,7 @@ require "active_support/core_ext/hash"
 class SouscriptSDK
   module HTTPCall
     def query(method:, args:)
-      uri = URI.parse(URI.escape(make_uri(method, args)))
+      uri = URI.parse(make_uri(method, args))
       res = Net::HTTP
         .get(uri)
         .force_encoding("ISO-8859-1").encode("UTF-8") # Fix encoding issue with accentuated letters
@@ -26,7 +26,7 @@ class SouscriptSDK
       uri += "&IDREQ=#{method}"
 
       args.each do |key, val|
-        uri += "&#{key.upcase}=#{val}"
+        uri += "&#{key.upcase}=#{URI.encode_www_form_component(val)}"
       end
 
       uri
