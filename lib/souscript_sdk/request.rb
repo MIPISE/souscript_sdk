@@ -366,7 +366,7 @@ class SouscriptSDK
     #   - :actif    [String] 1 programme activé, 0 programme désactivé
     #   - :type     [String] 1 montant en euros, 2 montant en nombre de parts
     #   - :montant  [String] Montant souscrit en euros ou en nombre de parts delon type
-    define_request(:get_partner_programmed_payement_list, 3007, %i[idcli]) { |response| response.dig(:api, :verprog) }
+    define_request(:get_partner_programmed_payment_list, 3007, %i[idcli]) { |response| response.dig(:api, :verprog) }
 
     # ========================================================================
     # > Requetes type 4000 cgp

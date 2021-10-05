@@ -73,7 +73,7 @@ test "Type 3000 and 2000" do |client|
   assert(download_document[:b64].present? || (download_document[:err].present? and (download_document[:err] == "0" or download_document[:err] == "1")))
 
   # 3007
-  partner_programmed_payment_list = client.get_partner_programmed_payement_list(idcli: partners_list[2][:id])
+  partner_programmed_payment_list = client.get_partner_programmed_payment_list(idcli: partners_list[2][:id])
   assert partner_programmed_payment_list.is_a?(Hash)
   assert partner_programmed_payment_list[:idint].present?
   partner_programmed_payment_id = partner_programmed_payment_list[:idint]
