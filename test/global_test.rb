@@ -35,7 +35,7 @@ end
 
 test "Type 3000 and 2000" do |client|
   # 3001
-  # problème d'acquisition de refext dans cette requête
+  # problÃ¨me d'acquisition de refext dans cette requÃªte
   partners_list = client.get_partners_list
   assert partners_list.is_a?(Array)
   assert partners_list.first[:id].present?
@@ -89,9 +89,29 @@ test "Type 4000 and 2000" do |client|
   cgp_list = client.get_cgp_list
   assert cgp_list.is_a?(Array)
   assert cgp_list.first[:id].present?
-  cgp_list.first[:id]
+  cgp_hash = cgp_list.first
 
-  # 2003
+  # 2002
+  res = client.creation_update_company({idsoc: nil, idgr: 0, refext: 2, creamod: 1, raison: 'MySociety'})
+  assert res[:res] == 'OK'
+  assert res[:idint].present?
+
+  # 2006
+  encoded_file = Base64.strict_encode64(File.open(File.join(Dir.pwd, 'test', 'assets', 'fake_pdf.pdf')).read)
+  args =
+    {
+      idsoc: cgp_hash[:ids],
+      idcgp: cgp_hash[:id],
+      creamod: 1,
+      fichierb64: encoded_file,
+      nomfichier: 'filename',
+      nomdoc: 'Convention partenaire',
+      idcat: 9, # Souscript category for "Contrat" document's category
+      typedoc: 19 # Souscript category for "Convention d'apporteur" document's type
+    }
+  res = client.upload_partner_document(args)
+  assert res[:res] == 'OK'
+  assert !res[:guid].blank?
 end
 
 test "Type 5000 and 2000" do |client|

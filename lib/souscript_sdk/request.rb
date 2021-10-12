@@ -1,11 +1,12 @@
 class SouscriptSDK
   module Request
-    def self.define_request(method, code, required_keys = [], optional_keys = [], &process)
+    def self.define_request(method, code, required_keys = [], optional_keys = [], http_method: :get, &process)
       define_method(method) do |args = {}|
         result =
           query(
             method: code,
-            args: format_hash(args, required_keys, optional_keys)
+            args: format_hash(args, required_keys, optional_keys),
+            http_method: http_method
           )
 
         process.call(result)
@@ -132,7 +133,8 @@ class SouscriptSDK
       :creation_update_company,
       2002,
       %i[idsoc idgr refext creamod],
-      %i[raison rcs add1 cp ville tel mobile mail bic iban tableretro rc_contact rc_tel rc_mobile rc_mail]
+      %i[raison rcs add1 cp ville tel mobile mail bic iban tableretro rc_contact rc_tel rc_mobile rc_mail],
+      http_method: :post
     ) { |response| response.dig(:api) }
 
     # création/modification d’un tiers : résultat de la modification
@@ -212,7 +214,8 @@ class SouscriptSDK
       :upload_partner_document,
       2005,
       %i[idsoc idcgp creamod],
-      %i[guiddoc idcat typedoc nomdoc nomfichier datevaldoc fichierb64]
+      %i[guiddoc idcat typedoc nomdoc nomfichier datevaldoc fichierb64],
+      http_method: :post
     ) { |response| response.dig(:api) }
 
     # ========================================================================
