@@ -1,5 +1,2 @@
 .env
-.DS_Store
 .byebug_history
-.idea/
-test/.DS_Store
