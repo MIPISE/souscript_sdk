@@ -22,7 +22,10 @@ class SouscriptSDK
     # @return: [SCPI]
     #   - :id  [String] ID de la SCPI
     #   - :nom [String] Nom de la SCPI
-    define_request(:scpis, 1001) { |response| response.dig(:api, :scpi) }
+    define_request(:scpis, 1001) do |response|
+      res = response.dig(:api, :scpi)
+      res.is_a?(Hash) ? [res] : res
+    end
 
     # Valorisations SCPI : liste des valeurs historiques de souscription
     # ------------------------------------------------------------------------
