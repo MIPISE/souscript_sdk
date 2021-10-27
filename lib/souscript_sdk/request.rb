@@ -341,7 +341,10 @@ class SouscriptSDK
     #   - :iddoc        [String] Identifiant du document
     #   - :idsouscript  [String] Identifiant de la souscription (Si 0, il s’agit d’un document personnel)
     #   - :datemaj      [String] Dernière date de téléchargement du document
-    define_request(:get_customer_documents_list, 3005, %i[idcli], %i[typedoc]) { |response| response.dig(:api, :doc) }
+    define_request(:get_customer_documents_list, 3005, %i[idcli], %i[typedoc]) do |response|
+      res = response.dig(:api, :doc)
+      res.is_a?(Hash) ? [res] : res
+    end
 
     # telecharger un document : document
     # ------------------------------------------------------------------------
