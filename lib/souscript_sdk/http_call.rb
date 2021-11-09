@@ -51,10 +51,7 @@ class SouscriptSDK
     end
 
     def post_params(args, params)
-      args.each_with_object(params) do |(key, val), memo|
-        memo[key.upcase] = URI.encode_www_form_component(val)
-        memo
-      end
+      params.merge(args.transform_keys(&:upcase))
     end
   end
 end
