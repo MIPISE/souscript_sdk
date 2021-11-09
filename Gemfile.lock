@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    souscript_sdk (2.0.4)
+    souscript_sdk (2.0.5)
       activesupport (>= 5.1.0)
 
 GEM
@@ -18,7 +18,7 @@ GEM
     cutest (1.2.3)
       clap
     dotenv (2.7.6)
-    i18n (1.8.10)
+    i18n (1.8.11)
       concurrent-ruby (~> 1.0)
     minitest (5.14.4)
     tzinfo (2.0.4)
