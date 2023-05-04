@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    souscript_sdk (2.0.5)
+    souscript_sdk (2.0.6)
       activesupport (>= 5.1.0)
 
 GEM
@@ -26,6 +26,7 @@ GEM
     zeitwerk (2.5.1)
 
 PLATFORMS
+  arm64-darwin-21
   x86_64-darwin-19
 
 DEPENDENCIES
