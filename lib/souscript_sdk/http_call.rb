@@ -23,7 +23,7 @@ class SouscriptSDK
           res
             .force_encoding("ISO-8859-1")
             .encode("UTF-8")
-            .gsub(/\u0004/, "")
+            .delete("\u0004")
             .gsub(/<(?=[^<>]*<)/, "&lt;")
             .gsub(/&(?!(?:amp|lt|gt|quot|apos);)/, "&amp;")
         )
