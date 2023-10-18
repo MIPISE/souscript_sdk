@@ -237,7 +237,14 @@ class SouscriptSDK
     #   - :codeid  [String] ID SGP du client
     #   - :refext  [String] Référence externe du client
     #   - :datemaj [String] Dernière date de mise à jour manuelle
-    define_request(:get_partners_list, 3001) { |response| response.dig(:api, :associe) }
+    define_request(:get_partners_list, 3001) do |response|
+      res = response.dig(:api, :associe)
+      case res
+      when NilClass then []
+      when Hash then [res]
+      else res
+      end
+    end
 
     # liste des associes : liste des associe
     # ------------------------------------------------------------------------
@@ -309,7 +316,11 @@ class SouscriptSDK
     #   - :statut       [String] 1 ACTIVE  2 MUTEE 3 ETEINTE
     define_request(:get_share_list, 3003, %i[idcli]) do |response|
       res = response.dig(:api, :souscript)
-      res.is_a?(Hash) ? [res] : res
+      case res
+      when NilClass then []
+      when Hash then [res]
+      else res
+      end
     end
 
     # liste des mouvements financiers : liste des mouvements financiers
@@ -431,7 +442,7 @@ class SouscriptSDK
     #   - :idgroupe* [Integer] Identifiant du groupement
     # @return: [societe]
     #   - :rs        [String] Raison sociale de la société
-    #   - :id        [String] Identifiant base de la société 
+    #   - :id        [String] Identifiant base de la société
     define_request(:get_group_companies_list, 5002, %i[idgroupe]) { |response| response.dig(:api, :societe) }
 
     # sociétés : liste des sociétés (ou cabinets)
