@@ -386,7 +386,14 @@ class SouscriptSDK
     #   - :actif    [String] 1 programme activé, 0 programme désactivé
     #   - :type     [String] 1 montant en euros, 2 montant en nombre de parts
     #   - :montant  [String] Montant souscrit en euros ou en nombre de parts delon type
-    define_request(:get_partner_programmed_payment_list, 3007, %i[idcli]) { |response| response.dig(:api, :verprog) }
+    define_request(:get_partner_programmed_payment_list, 3007, %i[idcli]) do |response|
+      res = response.dig(:api, :verprog)
+      case res
+      when NilClass then []
+      when Hash then [res]
+      else res
+      end
+    end
 
     # ========================================================================
     # > Requetes type 4000 cgp
@@ -434,7 +441,14 @@ class SouscriptSDK
     # @return: [groupe]
     #   - :nom   [String] Nom du groupement
     #   - :id    [String] ID du groupement
-    define_request(:get_group_list, 5001) { |response| response.dig(:api, :groupe) }
+    define_request(:get_group_list, 5001) do |response|
+      res = response.dig(:api, :groupe)
+      case res
+      when NilClass then []
+      when Hash then [res]
+      else res
+      end
+    end
 
     # CGP de groupement : liste des cgp du groupement
     # ------------------------------------------------------------------------
@@ -453,7 +467,14 @@ class SouscriptSDK
     #   - :idgrp     [String] Identifiant base du groupement auquel appartient la société (0 si aucune appartenance)
     #   - :refext    [String] Référence externe de la société
     #   - :datemaj   [String] Dernière date de mise à jour manuelle de la fiche
-    define_request(:get_companies_list, 5003) { |response| response.dig(:api, :societe) }
+    define_request(:get_companies_list, 5003) do |response|
+      res = response.dig(:api, :societe)
+      case res
+      when NilClass then []
+      when Hash then [res]
+      else res
+      end
+    end
 
     # CGP de société : liste des cgp de la societe (du cabinet
     # ------------------------------------------------------------------------
