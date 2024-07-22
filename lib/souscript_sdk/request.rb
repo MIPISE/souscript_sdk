@@ -52,7 +52,10 @@ class SouscriptSDK
     # @return: [catdoc]
     #   - :nom    [String] Nom du document
     #   - :id     [String] ID du document
-    define_request(:document_categories, 1004) { |response| response.dig(:api, :catdoc) }
+    define_request(:document_categories, 1004) do |response|
+      res = response.dig(:api, :catdoc)
+      res.is_a?(Hash) ? [res] : res
+    end
 
     # type document : liste des types de documents
     # ------------------------------------------------------------------------
@@ -61,7 +64,11 @@ class SouscriptSDK
     # @return: [typedoc]
     #   - :nom [String] Nom du document
     #   - :id  [String] ID du document
-    define_request(:document_types, 1005, %i[idcat]) { |response| response.dig(:api, :typedoc) }
+    define_request(:document_types, 1005, %i[idcat]) do |response|
+      res = response.dig(:api, :typedoc)
+      res.is_a?(Hash) ? [res] : res
+    end
+
 
     # ========================================================================
     # > Requetes type 2000 synchronisation
@@ -431,7 +438,7 @@ class SouscriptSDK
     #   - :idgroupe* [Integer] Identifiant du groupement
     # @return: [societe]
     #   - :rs        [String] Raison sociale de la société
-    #   - :id        [String] Identifiant base de la société 
+    #   - :id        [String] Identifiant base de la société
     define_request(:get_group_companies_list, 5002, %i[idgroupe]) { |response| response.dig(:api, :societe) }
 
     # sociétés : liste des sociétés (ou cabinets)
