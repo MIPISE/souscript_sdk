@@ -24,7 +24,11 @@ class SouscriptSDK
     #   - :nom [String] Nom de la SCPI
     define_request(:scpis, 1001) do |response|
       res = response.dig(:api, :scpi)
-      res.is_a?(Hash) ? [res] : res
+      case res
+      when NilClass then []
+      when Hash then [res]
+      else res
+      end
     end
 
     # Valorisations SCPI : liste des valeurs historiques de souscription
@@ -349,7 +353,11 @@ class SouscriptSDK
     #   - :montant  [String] Montant en euros
     define_request(:get_financial_flows_list, 3004, %i[idcli]) do |response|
       res = response.dig(:api, :mvt)
-      res.is_a?(Hash) ? [res] : res
+      case res
+      when NilClass then []
+      when Hash then [res]
+      else res
+      end
     end
 
     # liste des documents d'un client : liste des documents d'un client
@@ -369,7 +377,11 @@ class SouscriptSDK
     #   - :datemaj      [String] Dernière date de téléchargement du document
     define_request(:get_customer_documents_list, 3005, %i[idcli], %i[typedoc]) do |response|
       res = response.dig(:api, :doc)
-      res.is_a?(Hash) ? [res] : res
+      case res
+      when NilClass then []
+      when Hash then [res]
+      else res
+      end
     end
 
     # telecharger un document : document
@@ -430,7 +442,14 @@ class SouscriptSDK
     #   - :idg      [String] Identifiant du groupement de rattachement
     #   - :dgg      [String] Droits global de vue sur le groupement
     #   - :datemaj  [String] Dernière date de mise à jour manuelle de la fiche
-    define_request(:get_cgp_list, 4001) { |response| response.dig(:api, :cgp) }
+    define_request(:get_cgp_list, 4001) do |response|
+      res = response.dig(:api, :cgp)
+      case res
+      when NilClass then []
+      when Hash then [res]
+      else res
+      end
+    end
 
     # clients cgp : liste de tous les clients du cgp
     # ------------------------------------------------------------------------
@@ -445,7 +464,14 @@ class SouscriptSDK
     #   - :mail     [String] Adresse email duc lient
     #   - :id       [String] Identifiant du client
     #   - :codeid   [String] Identifiant à usage interne SGP
-    define_request(:get_cgp_customers_list, 4002, %i[idcgp]) { |response| response.dig(:api, :client) }
+    define_request(:get_cgp_customers_list, 4002, %i[idcgp]) do |response|
+      res = response.dig(:api, :client)
+      case res
+      when NilClass then []
+      when Hash then [res]
+      else res
+      end
+    end
 
     # ========================================================================
     # > Requetes type 5000 sociétés
@@ -472,7 +498,14 @@ class SouscriptSDK
     # @return: [societe]
     #   - :rs        [String] Raison sociale de la société
     #   - :id        [String] Identifiant base de la société
-    define_request(:get_group_companies_list, 5002, %i[idgroupe]) { |response| response.dig(:api, :societe) }
+    define_request(:get_group_companies_list, 5002, %i[idgroupe]) do |response|
+      res = response.dig(:api, :societe)
+      case res
+      when NilClass then []
+      when Hash then [res]
+      else res
+      end
+    end
 
     # sociétés : liste des sociétés (ou cabinets)
     # ------------------------------------------------------------------------
@@ -507,6 +540,13 @@ class SouscriptSDK
     #                         0 non  1 oui
     #   - :idg       [String] Identifiant du groupement de rattachement (0 si non rattaché à un groupement)
     #   - :dgg       [String] Droits global de vue sur le groupement
-    define_request(:get_companies_cgp_list, 5004, %i[idsoc]) { |response| response.dig(:api, :cgp) }
+    define_request(:get_companies_cgp_list, 5004, %i[idsoc]) do |response|
+      res = response.dig(:api, :cgp)
+      case res
+      when NilClass then []
+      when Hash then [res]
+      else res
+      end
+    end
   end
 end
