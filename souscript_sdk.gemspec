@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = "souscript_sdk"
-  s.version = "2.1.0"
+  s.version = "2.1.1"
   s.summary = "Gem for Souscript API"
   s.description = "Gem for Souscript API"
   s.authors = ["Guillaume BOUDON", "Nathan LEBAS"]
