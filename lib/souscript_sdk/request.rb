@@ -54,7 +54,11 @@ class SouscriptSDK
     #   - :id     [String] ID du document
     define_request(:document_categories, 1004) do |response|
       res = response.dig(:api, :catdoc)
-      res.is_a?(Hash) ? [res] : res
+      case res
+      when NilClass then []
+      when Hash then [res]
+      else res
+      end
     end
 
     # type document : liste des types de documents
@@ -66,7 +70,11 @@ class SouscriptSDK
     #   - :id  [String] ID du document
     define_request(:document_types, 1005, %i[idcat]) do |response|
       res = response.dig(:api, :typedoc)
-      res.is_a?(Hash) ? [res] : res
+      case res
+      when NilClass then []
+      when Hash then [res]
+      else res
+      end
     end
 
 
